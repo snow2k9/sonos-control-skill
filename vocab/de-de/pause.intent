@@ -1,0 +1,4 @@
+pausiere {speaker}
+pausiere sonos
+stoppe {speaker}
+stoppe sonos
