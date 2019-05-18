@@ -23,9 +23,6 @@ class SonosControl(MycroftSkill):
             members[speaker.player_name.lower()] = speaker
 
         self.members = members
-    # @intent_file_handler('control.sonos.intent')
-    # def handle_control_sonos(self, message):
-    #     self.speak_dialog('control.sonos')
 
     @intent_file_handler('play.intent')
     def handle_sonos_play_intent(self, message):
@@ -62,8 +59,43 @@ class SonosControl(MycroftSkill):
         speaker.pause()
 
         self.speak_dialog("sonos.pause")
+
+
+    @intent_file_handler('volume_up.intent')
+    def handle_sonos_volume_up_intent(self, message):
+        member = str(message.data.get("speaker"))
+
+        if member == "None":
+            LOG.info("Undefined Speaker")
+            speaker = self.discovery.any_soco()
+        else:
+            LOG.info("Defined Speaker")
+            speaker = self.members.get(member)
+
+        if speaker == None:
             self.speak_dialog("sonos.nospeaker")
-            pass
+            return
+
+        speaker.volume = speaker.volume + VOL_STEP
+        self.speak_dialog("sonos.volume_up")
+
+    @intent_file_handler('volume_down.intent')
+    def handle_sonos_volume_down_intent(self, message):
+        member = str(message.data.get("speaker"))
+
+        if member == "None":
+            LOG.info("Undefined Speaker")
+            speaker = self.discovery.any_soco()
+        else:
+            LOG.info("Defined Speaker")
+            speaker = self.members.get(member)
+
+        if speaker == None:
+            self.speak_dialog("sonos.nospeaker")
+            return
+
+        speaker.volume = speaker.volume - VOL_STEP
+        self.speak_dialog("sonos.volume_down")
 
 def create_skill():
     return SonosControl()
