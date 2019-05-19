@@ -1,2 +1,1 @@
-soco
-git+https://github.com/SoCo/SoCo
+git+https://github.com/SoCo/SoCo@master#egg=soco
