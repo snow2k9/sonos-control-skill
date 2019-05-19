@@ -69,6 +69,25 @@ class SonosControl(MycroftSkill):
         speaker.volume = speaker.volume - VOL_STEP
         self.speak_dialog("sonos.volume_down")
 
+    @intent_file_handler('next_track.intent')
+    def handle_sonos_next_track_intent(self, message):
+        speaker = get_speaker(message.data.get("speaker"))
+
+        if speaker == None:
+            return
+
+        speaker.next()
+
+
+    @intent_file_handler('prev_track.intent')
+    def handle_sonos_prev_track_intent(self, message):
+        speaker = get_speaker(message.data.get("speaker"))
+
+        if speaker == None:
+            return
+
+        speaker.previous()
+
 def get_speaker(utt):
     if utt == None:
         LOG.info("Undefined Speaker")
