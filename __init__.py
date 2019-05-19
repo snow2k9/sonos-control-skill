@@ -14,9 +14,9 @@ class SonosControl(MycroftSkill):
     def initialize(self):
         speakers = soco.discover()
         if len(speakers) == 0:
-            LOGGER.debug("Did not find any Sonos speakers")
+            LOG.debug("Did not find any Sonos speakers")
             return
-        LOGGER.debug("Found Sonos speakers")
+        LOG.debug("Found Sonos speakers")
 
         members = {}
         for speaker in speakers:
