@@ -2,14 +2,15 @@
 Controls sonos music player
 
 ## Description
+  **groups untested**
 
 
 ## Examples
  - "Sonos play"
- - "Sonos stop"
+ - "Sonos pause"
 
 
 ## Credits
-Maximilian Bosche
+ - [soco Project](https://github.com/SoCo/SoCo)
 
 
