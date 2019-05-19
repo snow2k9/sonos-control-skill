@@ -26,36 +26,22 @@ class SonosControl(MycroftSkill):
 
     @intent_file_handler('play.intent')
     def handle_sonos_play_intent(self, message):
-        member = str(message.data.get("speaker"))
-
-        if member == "None":
-            LOG.info("Undefined Speaker")
-            speaker = self.discovery.any_soco()
-        else:
-            LOG.info("Defined Speaker")
-            speaker = self.members.get(member)
+        speaker = get_speaker(message.data.get("speaker"))
 
         if speaker == None:
-            self.speak_dialog("sonos.nospeaker")
             return
+
         speaker.play()
 
         self.speak_dialog("sonos.play")
 
     @intent_file_handler('pause.intent')
     def handle_sonos_pause_intent(self, message):
-        member = str(message.data.get("speaker"))
-
-        if member == "None":
-            LOG.info("Undefined Speaker")
-            speaker = self.discovery.any_soco()
-        else:
-            LOG.info("Defined Speaker")
-            speaker = self.members.get(member)
+        speaker = get_speaker(message.data.get("speaker"))
 
         if speaker == None:
-            self.speak_dialog("sonos.nospeaker")
             return
+
         speaker.pause()
 
         self.speak_dialog("sonos.pause")
@@ -63,39 +49,39 @@ class SonosControl(MycroftSkill):
 
     @intent_file_handler('volume_up.intent')
     def handle_sonos_volume_up_intent(self, message):
-        member = str(message.data.get("speaker"))
-
-        if member == "None":
-            LOG.info("Undefined Speaker")
-            speaker = self.discovery.any_soco()
-        else:
-            LOG.info("Defined Speaker")
-            speaker = self.members.get(member)
+        speaker = get_speaker(message.data.get("speaker"))
 
         if speaker == None:
-            self.speak_dialog("sonos.nospeaker")
             return
+
 
         speaker.volume = speaker.volume + VOL_STEP
         self.speak_dialog("sonos.volume_up")
 
     @intent_file_handler('volume_down.intent')
     def handle_sonos_volume_down_intent(self, message):
-        member = str(message.data.get("speaker"))
-
-        if member == "None":
-            LOG.info("Undefined Speaker")
-            speaker = self.discovery.any_soco()
-        else:
-            LOG.info("Defined Speaker")
-            speaker = self.members.get(member)
+        speaker = get_speaker(message.data.get("speaker"))
 
         if speaker == None:
-            self.speak_dialog("sonos.nospeaker")
             return
+
 
         speaker.volume = speaker.volume - VOL_STEP
         self.speak_dialog("sonos.volume_down")
+
+def get_speaker(utt):
+    if utt == None:
+        LOG.info("Undefined Speaker")
+        speaker = soco.discovery.any_soco()
+    else:
+        LOG.info("Defined Speaker")
+        speaker = SonosControl.members.get(utt)
+
+    if speaker == None:
+        SonosControl.speak_dialog("sonos.nospeaker")
+        return None
+
+    return speaker
 
 def create_skill():
     return SonosControl()
