@@ -2,15 +2,17 @@
 Controls sonos music player
 
 ## Description
-  **groups untested**
+  **currently only chooses random device**
 
-  Control your Sonos with [Mycroft](https://mycroft.ai)
+  Control your Sonos with [Mycroft](https://github.com/MycroftAI/mycroft-core)
 
 
 
 ## Examples
  - "Sonos play"
  - "Sonos pause"
+ - "Sonos volume five"
+ - "Sonos next song"
 
 
 ## Credits
